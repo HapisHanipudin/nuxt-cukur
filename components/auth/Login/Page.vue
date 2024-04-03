@@ -10,7 +10,7 @@
       <UIInput type="password" placeholder="Password" v-model="data.password">
         <template #icon> <KeyIcon /> </template>
       </UIInput>
-      <UIButton liquid font="bold"> Login </UIButton>
+      <UIButtonForm liquid font="bold"> Login </UIButtonForm>
     </form>
   </div>
 </template>
