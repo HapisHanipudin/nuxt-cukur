@@ -3,7 +3,7 @@
     <div>
       <Sidebar />
     </div>
-    <div class="w-full text-white">
+    <div class="w-full min-h-screen flex justify-center items-center text-white">
       <NuxtPage />
     </div>
   </div>
@@ -13,4 +13,8 @@
 import { useSessionStore } from "./stores/session";
 
 const session = useSessionStore();
+
+onBeforeMount(async () => {
+  await session.initAuth();
+});
 </script>

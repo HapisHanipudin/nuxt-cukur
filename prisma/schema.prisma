@@ -27,12 +27,13 @@ model RefreshToken {
 }
 
 model Santri {
-  id        String    @id @default(uuid())
-  name      String
-  cardNo    String
-  updatedAt DateTime  @updatedAt
-  createdAt DateTime  @default(now())
-  purchase  Antrian[]
+  id         String     @id @default(uuid())
+  name       String
+  cardNumber String
+  kelas      kelasValue
+  updatedAt  DateTime   @updatedAt
+  createdAt  DateTime   @default(now())
+  purchase   Antrian[]
 }
 
 model Cukur {
@@ -76,4 +77,13 @@ enum statusValue {
   WAITING
   PROGRESS
   FINISHED
+}
+
+enum kelasValue {
+  Kelas_1
+  Kelas_2
+  Kelas_3
+  Kelas_4
+  Kelas_5
+  Kelas_6
 }

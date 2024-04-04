@@ -8,10 +8,14 @@
       <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" to="/queue"><QueueListIcon class="w-8 h-8" /></NuxtLink>
       <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" to="/santri"><UsersIcon class="w-8 h-8" /></NuxtLink>
       <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" to="/setting"><Cog6ToothIcon class="w-8 h-8" /></NuxtLink>
+      <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" v-if="!session.authUser" to="/login"><ArrowLeftEndOnRectangleIcon class="w-8 h-8" /></NuxtLink>
+      <button class="hover:scale-110 duration-300 transition-all ease-in-out" v-else @click="session.logout()"><ArrowLeftStartOnRectangleIcon class="w-8 h-8" /></button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { HomeIcon, UsersIcon, QueueListIcon, Cog6ToothIcon } from "@heroicons/vue/24/solid";
+const session = useSessionStore();
+
+import { HomeIcon, UsersIcon, QueueListIcon, Cog6ToothIcon, ArrowLeftEndOnRectangleIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/vue/24/solid";
 </script>

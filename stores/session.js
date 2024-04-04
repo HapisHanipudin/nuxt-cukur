@@ -5,9 +5,11 @@ export const useSessionStore = defineStore({
   id: "SessionStore",
   state: () => ({
     authToken: "",
-    authUser: {},
+    authUser: null,
     authLoading: true,
-    isAdmin: false,
+    isAdmin: () => {
+      return this.authUser.type === "ADMIN";
+    },
   }),
   actions: {
     setAuthToken(token) {
@@ -40,7 +42,9 @@ export const useSessionStore = defineStore({
     refreshToken() {
       return new Promise(async (resolve, reject) => {
         try {
-          const data = await $fetch("/api/auth/refresh");
+          const data = await $fetch("/api/auth/refresh", {
+            method: "POST",
+          });
           this.setAuthToken(data.accessToken);
           resolve(true);
         } catch (error) {
@@ -65,7 +69,7 @@ export const useSessionStore = defineStore({
     getUser() {
       return new Promise(async (resolve, reject) => {
         try {
-          const data = await $fetch("/api/auth/user");
+          const data = await useFetchApi("/api/auth/user");
           this.setAuthUser(data.user);
           resolve(true);
         } catch (error) {
