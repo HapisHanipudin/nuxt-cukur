@@ -44,16 +44,17 @@ model Cukur {
 }
 
 model Antrian {
-  id          String   @id @default(uuid())
+  id          String      @id @default(uuid())
   queueNumber Int
-  ticketType  tiket    @default(Reguler)
+  ticketType  tiket       @default(Reguler)
   santriId    String?
-  payment     payment  @default(CASH)
+  payment     payment     @default(CASH)
   cukurId     String?
-  updatedAt   DateTime @updatedAt
-  createdAt   DateTime @default(now())
-  cukur       Cukur?   @relation(fields: [cukurId], references: [id])
-  santri      Santri?  @relation(fields: [santriId], references: [id])
+  status      statusValue @default(WAITING)
+  updatedAt   DateTime    @updatedAt
+  createdAt   DateTime    @default(now())
+  cukur       Cukur?      @relation(fields: [cukurId], references: [id])
+  santri      Santri?     @relation(fields: [santriId], references: [id])
 }
 
 enum tiket {
@@ -69,4 +70,10 @@ enum payment {
 enum usertype {
   ADMIN
   BARBER
+}
+
+enum statusValue {
+  WAITING
+  PROGRESS
+  FINISHED
 }
