@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -29,7 +30,7 @@ model RefreshToken {
 model Santri {
   id         String     @id @default(uuid())
   name       String
-  cardNumber String
+  cardNumber String     @unique @default(uuid())
   kelas      kelasValue
   updatedAt  DateTime   @updatedAt
   createdAt  DateTime   @default(now())
