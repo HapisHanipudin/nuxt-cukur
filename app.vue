@@ -3,8 +3,14 @@
     <div>
       <Sidebar />
     </div>
-    <div class="w-full">
+    <div class="w-full text-white">
       <NuxtPage />
     </div>
   </div>
 </template>
+
+<script setup>
+import { useSessionStore } from "./stores/session";
+
+const session = useSessionStore();
+</script>

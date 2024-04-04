@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(uuid())
+  username     String         @unique
+  password     String
+  type         usertype       @default(BARBER)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  RefreshToken RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Santri {
+  id        String    @id @default(uuid())
+  name      String
+  cardNo    String
+  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @default(now())
+  purchase  Antrian[]
+}
+
+model Cukur {
+  id        String    @id @default(uuid())
+  name      String
+  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @default(now())
+  queue     Antrian[]
+}
+
+model Antrian {
+  id          String   @id @default(uuid())
+  queueNumber Int
+  ticketType  tiket    @default(Reguler)
+  santriId    String?
+  payment     payment  @default(CASH)
+  cukurId     String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  cukur       Cukur?   @relation(fields: [cukurId], references: [id])
+  santri      Santri?  @relation(fields: [santriId], references: [id])
+}
+
+enum tiket {
+  Reguler
+  VIP
+}
+
+enum payment {
+  CASH
+  SALDO
+}
+
+enum usertype {
+  ADMIN
+  BARBER
+}
