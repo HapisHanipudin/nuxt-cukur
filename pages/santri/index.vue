@@ -27,7 +27,7 @@
               <UIButton class="flex gap-2" font="bold"><div class="h-8 flex grow bg-gray-200/50 rounded-full animate-pulse"></div></UIButton>
             </td>
           </tr>
-          <tr v-for="(santri, index) in santris" v-else-if="santris.length > 0" class="border-b font-semibold">
+          <tr :class="{ 'bg-neutral-800/70': index % 2 === 0 }" v-for="(santri, index) in santris" v-else-if="santris.length > 0" class="border-b font-semibold">
             <td class="p-3 text-center">{{ index + 1 }}</td>
             <td class="font-bold">{{ santri.name }}</td>
             <td class="text-center">{{ santri.cardNumber }}</td>
