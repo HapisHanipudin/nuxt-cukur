@@ -1,9 +1,8 @@
 import { deleteSantri, getSantriById } from "~/server/db/santri";
 
 export default defineEventHandler(async (event) => {
-  const query = getQuery(event);
-
-  const santri = await getSantriById(query.id);
+  const id = event.context.params.id;
+  const santri = await getSantriById(id);
   if (!santri) {
     throw createError({
       statusCode: 404,
@@ -11,7 +10,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  await deleteSantri(query.id);
+  await deleteSantri(id);
 
   return {
     status: "done",

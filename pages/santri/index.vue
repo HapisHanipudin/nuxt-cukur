@@ -10,20 +10,31 @@
           <tr class="border-b">
             <th class="w-16">No</th>
             <th>Nama</th>
-            <th class="w-32">Card Number</th>
+            <th class="w-36">Card Number</th>
             <th class="w-24">Kelas</th>
             <th class="w-32">Aksi</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="border-b font-semibold">
-            <td class="p-3 text-center">1</td>
-            <td class="font-bold">Wildan Hanif</td>
-            <td class="text-center">081028319312</td>
-            <td class="text-center">XII RPL 1</td>
+          <tr v-if="isLoading" v-for="i in 10" class="border-b font-semibold">
+            <td class="p-3 text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
+            <td class="font-bold"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
+            <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
+            <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
+            <td class="flex gap-2 text-center">
+              <UIButton class="flex gap-2" font="bold"><div class="h-8 flex grow bg-gray-200/50 rounded-full animate-pulse"></div></UIButton>
+              <UIButton class="flex gap-2" font="bold"><div class="h-8 flex grow bg-gray-200/50 rounded-full animate-pulse"></div></UIButton>
+              <UIButton class="flex gap-2" font="bold"><div class="h-8 flex grow bg-gray-200/50 rounded-full animate-pulse"></div></UIButton>
+            </td>
+          </tr>
+          <tr v-for="(santri, index) in santris" v-else-if="santris.length > 0" class="border-b font-semibold">
+            <td class="p-3 text-center">{{ index + 1 }}</td>
+            <td class="font-bold">{{ santri.name }}</td>
+            <td class="text-center">{{ santri.cardNumber }}</td>
+            <td class="text-center">{{ santri.kelas.replace(/_/g, " ") }}</td>
             <td class="flex gap-2 text-center">
               <UIButton class="flex gap-2" font="bold"><PencilSquareIcon class="w-6 h-6" /> Ubah </UIButton>
-              <UIButton class="flex gap-2" font="bold"><TrashIcon class="w-6 h-6" /> Hapus</UIButton>
+              <UIButton @click="deleteSantri(santri.id)" class="flex gap-2" font="bold"><TrashIcon class="w-6 h-6" /> Hapus</UIButton>
               <UIButton class="flex gap-2" font="bold"><ClockIcon class="w-6 h-6" /> Riwayat</UIButton>
             </td>
           </tr>
@@ -35,6 +46,38 @@
 
 <script setup>
 import { PlusCircleIcon as AddIcon, PencilSquareIcon, TrashIcon, ClockIcon } from "@heroicons/vue/24/outline";
+
+const isLoading = ref(true);
+const santris = ref([]);
+
+const getSantris = async () => {
+  isLoading.value = true;
+  try {
+    const { data } = await useFetch("/api/santri");
+    santris.value = data.value;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const deleteSantri = async (id) => {
+  try {
+    const { data } = await useFetch(`/api/santri/${id}`, {
+      method: "DELETE",
+    });
+    if (data.value) {
+      getSantris();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+onBeforeMount(async () => {
+  await getSantris();
+});
 </script>
 
 <style scoped>
