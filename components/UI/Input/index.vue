@@ -3,7 +3,7 @@
     <div class="w-6" v-if="$slots.icon">
       <slot name="icon"></slot>
     </div>
-    <div>
+    <div class="w-full">
       <input
         :class="borderDefault"
         @input="$emit('update:modelValue', $event.target.value)"

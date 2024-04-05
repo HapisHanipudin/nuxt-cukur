@@ -1,4 +1,5 @@
 <template>
+  <UIModal />
   <div class="flex flex-row bg-zinc-900">
     <div>
       <Sidebar />
@@ -18,3 +19,10 @@ onBeforeMount(async () => {
   await session.initAuth();
 });
 </script>
+
+<style>
+body,
+html {
+  @apply bg-zinc-900 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-gold-950;
+}
+</style>
