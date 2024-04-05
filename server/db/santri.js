@@ -16,20 +16,21 @@ export const getAllSantri = () => {
   return prisma.santri.findMany();
 };
 
-export const getSantriById = (id) => {
-  return prisma.santri.findUnique({ where: { id } });
-};
-
-export const getSantriByCardNumber = (cardNumber) => {
-  return prisma.santri.findUnique({ where: { cardNumber } });
-};
-
 export const searchSantriByName = (name) => {
   return prisma.santri.findMany({
     where: {
       name: {
-        search: name,
+        mode: "insensitive",
+        contains: name,
       },
+    },
+  });
+};
+
+export const getSantriByIdOrCardNumber = (idOrCardNumber) => {
+  return prisma.santri.findFirst({
+    where: {
+      OR: [{ id: { equals: idOrCardNumber } }, { cardNumber: { equals: idOrCardNumber } }],
     },
   });
 };

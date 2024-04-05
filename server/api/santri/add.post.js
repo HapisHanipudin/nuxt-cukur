@@ -7,7 +7,5 @@ export default defineEventHandler(async (event) => {
 
   const santri = await createSantri({ name, cardNumber, kelas });
 
-  return {
-    santri: transformSantri(santri),
-  };
+  return transformSantri(santri);
 });
