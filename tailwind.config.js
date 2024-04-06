@@ -4,7 +4,32 @@ export default {
 
   content: [],
   theme: {
+    animation: {
+      toast: "toast 3s ease-in-out forwards",
+      loadingbar: "loadingbar 2s 0.5s ease-in-out infinite ",
+    },
     extend: {
+      keyframes: {
+        toast: {
+          "0%, 100%": {
+            opacity: 0,
+            transform: "translateY(-100%)",
+          },
+          "25%, 75%": {
+            opacity: 1,
+            transform: "translateY(0)",
+          },
+        },
+        loadingbar: {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
+      },
+
       colors: {
         gold: {
           DEFAULT: "#f7b801",
