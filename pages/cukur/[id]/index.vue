@@ -7,7 +7,9 @@
         <NuxtLink :to="`/cukur/${cukurData.id}/tiket`" v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-green-500 grow text-white py-5"
           ><CreditCardIcon class="w-8 h-8 inline" /> Beli Tiket</NuxtLink
         >
-        <button v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-white text-black grow py-5"><ClockIcon class="w-8 h-8 inline" /> Riwayat</button>
+        <NuxtLink :to="`/cukur/${cukurData.id}/history`" v-motion-slide-right :delay="300" class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-white text-black grow py-5"
+          ><ClockIcon class="w-8 h-8 inline" /> Riwayat</NuxtLink
+        >
       </div>
     </div>
     <div class="flex max-lg:flex-col gap-3 justify-center">

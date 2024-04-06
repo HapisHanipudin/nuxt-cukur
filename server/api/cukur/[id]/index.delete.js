@@ -1,20 +1,18 @@
-import { getCukurById } from "~/server/db/cukur";
-import { getRegQueue, getVVIPQueue, getOnProgressQueue } from "~/server/db/queue";
-import { transformCukur } from "~/server/transformers/cukur";
+import { getCukurById, deleteCukur } from "~/server/db/cukur";
 
 export default defineEventHandler(async (event) => {
   const id = event.context.params.id;
+  const santri = await getCukurById(id);
+  if (!santri) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Santri not found",
+    });
+  }
 
-  const cukur = await getCukurById(id);
-
-  const queue = await getRegQueue(id);
-  const vip = await getVVIPQueue(id);
-  const progress = await getOnProgressQueue(id);
+  await deleteCukur(id);
 
   return {
-    cukur: transformCukur(cukur),
-    onProgress: progress.map(transformCukur),
-    vip: vip.map(transformCukur),
-    queue: queue.map(transformCukur),
+    status: "done",
   };
 });

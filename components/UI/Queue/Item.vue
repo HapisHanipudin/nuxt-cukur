@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full px-3 py-2 flex justify-between text-white items-center border-b-[0.2px] border-white/20">
+  <div class="w-full px-3 py-3 flex justify-between text-white items-center border-b-[0.2px] last:border-0 border-white/20">
     <span
       class="text-xl font-semibold"
       :class="{
