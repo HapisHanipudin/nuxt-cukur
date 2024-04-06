@@ -1,9 +1,5 @@
 import { prisma } from ".";
 
-export const getAllQueue = () => {
-  return prisma.queue.findMany();
-};
-
 export const getCukurWithQueueById = (id) => {
   return prisma.cukur.findUnique({
     where: {
@@ -64,7 +60,10 @@ export const getVVIPQueue = (id) => {
     where: {
       cukurId: id,
       ticketType: "VIP",
-      status: "WAITING",
+      status: "VIP_WAITING",
+    },
+    include: {
+      santri: true,
     },
   });
 };
@@ -76,23 +75,44 @@ export const getRegQueue = (id) => {
       ticketType: "REGULER",
       status: "WAITING",
     },
-  });
-};
-
-getOnProgressQueue = (id) => {
-  return prisma.queue.findMany({
-    where: {
-      cukurId: id,
-      status: "PROGRESS",
+    include: {
+      santri: true,
     },
   });
 };
 
-getFinishedQueue = (id) => {
+export const getWaitingQueue = (id) => {
+  return prisma.queue.findMany({
+    where: {
+      cukurId: id,
+      status: "WAITING",
+    },
+    include: {
+      santri: true,
+    },
+  });
+};
+
+export const getOnProgressQueue = (id) => {
+  return prisma.queue.findFirst({
+    where: {
+      cukurId: id,
+      status: "PROGRESS",
+    },
+    include: {
+      santri: true,
+    },
+  });
+};
+
+export const getFinishedQueue = (id) => {
   return prisma.queue.findMany({
     where: {
       cukurId: id,
       status: "FINISHED",
+    },
+    include: {
+      santri: true,
     },
   });
 };

@@ -53,7 +53,7 @@
             <td class="text-center max-md:hidden">{{ cukur.waktu }}</td>
             <td class="text-center">
               <div class="flex items-center gap-2">
-                <NuxtLink :to="`/cukur/${cukur.id}/buy`">
+                <NuxtLink :to="`/cukur/${cukur.id}/tiket`">
                   <UIButton class="flex gap-2 items-center hover:scale-105" font="bold"><PencilSquareIcon class="w-6 h-6" /> <span class="max-lg:hidden">Beli</span> </UIButton>
                 </NuxtLink>
                 <NuxtLink :to="`/cukur/${cukur.id}/history`">

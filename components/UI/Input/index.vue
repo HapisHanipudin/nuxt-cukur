@@ -12,6 +12,7 @@
         :placeholder="$props.placeholder"
         class="bg-inherit block w-full px-2 py-1 focus:ring-gold-600 focus:border-gold-600 focus:border"
       />
+      <slot></slot>
     </div>
     <div @click="type === 'password' ? (type = 'text') : (type = 'password')" v-if="$props.type === 'password'">
       <EyeIcon class="w-6 h-6 cursor-pointer" />

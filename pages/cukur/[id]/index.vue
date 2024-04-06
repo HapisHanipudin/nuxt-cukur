@@ -1,16 +1,19 @@
 <template>
-  <div class="flex container flex-col gap-4 mx-8 my-5">
+  <div v-if="!isLoading" class="flex container flex-col gap-4 mx-8 my-5">
     <h2 class="text-3xl font-extrabold text-white">On Progress</h2>
     <div class="flex max-lg:flex-col gap-3 justify-center">
-      <UIQueueProgress v-motion-slide-bottom data="auk" />
+      <UIQueueProgress v-motion-slide-bottom :data="cukurData.onProgress" />
       <div class="flex gap-3 grow lg:flex-col">
-        <button v-motion-slide-right class="w-full rounded-3xl text-2xl font-bold bg-green-500 grow text-white py-5">Selesai</button>
-        <button v-motion-slide-right class="w-full rounded-3xl text-2xl font-bold bg-white text-black grow py-5">Riwayat</button>
+        <NuxtLink :to="`/cukur/${cukurData.id}/tiket`" v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-green-500 grow text-white py-5"
+          ><CreditCardIcon class="w-8 h-8 inline" /> Beli Tiket</NuxtLink
+        >
+        <button v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-white text-black grow py-5"><ClockIcon class="w-8 h-8 inline" /> Riwayat</button>
       </div>
     </div>
     <div class="flex max-lg:flex-col gap-3 justify-center">
       <UIQueueCard name="Antrian">
         <UIQueueItem
+          v-if="cukurData.queue.length > 0"
           v-motion="{
             initial: { opacity: 0, x: 100 + '%' },
             enter: {
@@ -22,12 +25,13 @@
               x: 0,
             },
           }"
-          v-for="(au, index) in auah"
-          :antrian="au"
+          v-for="(queue, index) in cukurData.queue"
+          :antrian="queue"
         ></UIQueueItem>
       </UIQueueCard>
       <UIQueueCard name="VVIP">
         <UIQueueItem
+          v-if="cukurData.vip.length > 0"
           v-motion="{
             initial: { opacity: 0, x: 100 + '%' },
             enter: {
@@ -39,8 +43,8 @@
               x: 0,
             },
           }"
-          v-for="(au, index) in auah"
-          :antrian="au"
+          v-for="(queue, index) in cukurData.vip"
+          :antrian="queue"
         ></UIQueueItem>
       </UIQueueCard>
     </div>
@@ -48,12 +52,23 @@
 </template>
 
 <script setup>
-const $route = useRoute();
-const auah = ref([
-  { name: "Wildan Hanif", number: 29, type: "REG", status: "on progress" },
-  { name: "Wildan Hanif", number: 29, type: "REG", status: "on progress" },
-  { name: "Wildan Hanif", number: 29, type: "REG", status: "on progress" },
-]);
+import { ClockIcon, CreditCardIcon } from "@heroicons/vue/24/outline";
+const isLoading = ref(true);
 
-const auk = ref({ name: "Wildan Hanif", number: 29, type: "REG", status: "on progress" });
+const $route = useRoute();
+
+const cukurData = ref({});
+
+onMounted(async () => {
+  isLoading.value = true;
+  try {
+    const res = await $fetch(`/api/cukur/${$route.params.id}`);
+    console.log(res);
+    cukurData.value = res;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isLoading.value = false;
+  }
+});
 </script>
