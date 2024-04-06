@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "Quadrant Cuts",
+      title: "Dream Cuts",
       meta: [{ name: "Sistem Cukur Santri SI", content: "Sistem Cukur Santri SI" }],
     },
   },

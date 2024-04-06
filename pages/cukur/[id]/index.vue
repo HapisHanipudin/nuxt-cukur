@@ -1,5 +1,10 @@
 <template>
   <div v-if="!isLoading" class="flex container flex-col gap-4 mx-8 my-5">
+    <h1 class="text-gold-700 font-black font-sans text-4xl">Cukur</h1>
+    <h2 class="text-3xl font-extrabold text-white">Input Here</h2>
+    <div class="flex max-lg:flex-col gap-3 justify-center">
+      <UIQueueInput @inputEnter="queueInput" v-model="cukurInput" v-motion-slide-bottom :id="cukurData.id" :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
+    </div>
     <h2 class="text-3xl font-extrabold text-white">On Progress</h2>
     <div class="flex max-lg:flex-col gap-3 justify-center">
       <UIQueueProgress v-motion-slide-bottom :data="cukurData.onProgress" />
@@ -60,6 +65,25 @@ const isLoading = ref(true);
 const $route = useRoute();
 
 const cukurData = ref({});
+
+const cukurInput = ref("");
+
+const queueInput = async () => {
+  if (cukurInput.value === "") return;
+
+  isLoading.value = true;
+
+  try {
+    const res = await $fetch(`/api/queue/${cukurInput.value}`, {});
+
+    cukurInput.value = "";
+    cukurData.value = res;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    isLoading.value = false;
+  }
+};
 
 onMounted(async () => {
   isLoading.value = true;

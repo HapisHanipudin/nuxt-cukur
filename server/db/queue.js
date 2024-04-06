@@ -15,6 +15,17 @@ export const getCukurWithQueueById = (id) => {
   });
 };
 
+export const getQueueById = (id) => {
+  return prisma.queue.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      santri: true,
+    },
+  });
+};
+
 export const createQueue = (queueData) => {
   return prisma.queue.create({
     data: {
@@ -65,6 +76,24 @@ export const getVVIPQueue = (id) => {
     include: {
       santri: true,
     },
+    orderBy: {
+      queueNumber: "asc",
+    },
+  });
+};
+
+export const getVIP = (id) => {
+  return prisma.queue.findMany({
+    where: {
+      cukurId: id,
+      ticketType: "VIP",
+    },
+    include: {
+      santri: true,
+    },
+    orderBy: {
+      queueNumber: "asc",
+    },
   });
 };
 
@@ -78,6 +107,9 @@ export const getRegQueue = (id) => {
     include: {
       santri: true,
     },
+    orderBy: {
+      queueNumber: "asc",
+    },
   });
 };
 
@@ -89,6 +121,9 @@ export const getWaitingQueue = (id) => {
     },
     include: {
       santri: true,
+    },
+    orderBy: {
+      queueNumber: "asc",
     },
   });
 };
@@ -113,6 +148,31 @@ export const getFinishedQueue = (id) => {
     },
     include: {
       santri: true,
+    },
+  });
+};
+
+export const vipToWaitlist = (id, queueNum) => {
+  prisma.queue.updateMany({
+    where: {
+      queueNumber: {
+        gte: queueNum,
+      },
+    },
+    data: {
+      queueNumber: {
+        increment: 1,
+      },
+    },
+  });
+
+  return prisma.queue.updateMany({
+    where: {
+      id,
+    },
+    data: {
+      status: "WAITING",
+      queueNumber: queueNum,
     },
   });
 };

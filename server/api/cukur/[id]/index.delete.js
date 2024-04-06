@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
   if (!santri) {
     throw createError({
       statusCode: 404,
-      statusMessage: "Santri not found",
+      statusMessage: "Cukur not found",
     });
   }
 

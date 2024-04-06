@@ -1,4 +1,4 @@
-import { createQueue, getRegQueue, getVVIPQueue, getWaitingQueue } from "~/server/db/queue";
+import { createQueue, getRegQueue, getVIP, getVVIPQueue, getWaitingQueue } from "~/server/db/queue";
 import { transformQueue } from "~/server/transformers/queue";
 
 export default defineEventHandler(async (event) => {
@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
   };
 
   if (ticketType === "VIP") {
-    const queuenum = await getVVIPQueue(id);
+    const queuenum = await getVIP(id);
     data.status = "VIP_WAITING";
     data.queueNumber = queuenum.length + 1;
   } else {

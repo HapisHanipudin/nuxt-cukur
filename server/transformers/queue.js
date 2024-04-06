@@ -1,9 +1,10 @@
 import human from "human-time";
+import { transformSantri } from "./santri";
 
 export const transformQueue = (queue) => {
   return {
     id: queue.id,
-    santri: queue.santri,
+    santri: transformSantri(queue.santri),
     status: queue.status,
     queueNumber: queue.queueNumber,
     ticket: queue.ticketType,

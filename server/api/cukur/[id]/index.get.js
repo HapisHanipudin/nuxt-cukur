@@ -1,5 +1,5 @@
 import { getCukurById } from "~/server/db/cukur";
-import { getRegQueue, getVVIPQueue, getOnProgressQueue } from "~/server/db/queue";
+import { getRegQueue, getVVIPQueue, getOnProgressQueue, getWaitingQueue } from "~/server/db/queue";
 import { transformCukur } from "~/server/transformers/cukur";
 import { transformQueue } from "~/server/transformers/queue";
 
@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   const cukur = await getCukurById(id);
 
-  const queue = await getRegQueue(id);
+  const queue = await getWaitingQueue(id);
   const vip = await getVVIPQueue(id);
   const progress = await getOnProgressQueue(id);
 
