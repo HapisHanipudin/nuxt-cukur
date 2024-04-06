@@ -1,4 +1,5 @@
 <template>
+  <UIToast />
   <UIModal />
   <div class="flex flex-row bg-zinc-900">
     <div>

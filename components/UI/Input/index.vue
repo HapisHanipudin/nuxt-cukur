@@ -10,7 +10,7 @@
         :value="$props.modelValue"
         :type="type"
         :placeholder="$props.placeholder"
-        class="bg-inherit block w-full px-2 py-1 ring-gold-500 border-gold-500"
+        class="bg-inherit block w-full px-2 py-1 focus:ring-gold-600 focus:border-gold-600 focus:border"
       />
     </div>
     <div @click="type === 'password' ? (type = 'text') : (type = 'password')" v-if="$props.type === 'password'">

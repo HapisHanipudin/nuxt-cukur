@@ -10,7 +10,7 @@
           <tr class="border-b">
             <th class="w-16">No</th>
             <th>Nama</th>
-            <th class="w-36 max-md:hidden">Card Number</th>
+            <th class="w-96 max-md:hidden">Card Number</th>
             <th class="w-24 max-md:hidden">Kelas</th>
             <th class="w-32">Aksi</th>
           </tr>
@@ -48,7 +48,7 @@
             :key="santri.id"
           >
             <td class="p-3 text-center">{{ index + 1 }}</td>
-            <td class="font-bold">
+            <td class="font-bold text-lg">
               <NuxtLink :to="`/santri/${santri.id}`" :data="santri">{{ santri.name }}</NuxtLink>
             </td>
             <td class="text-center max-md:hidden">{{ santri.cardNumber }}</td>
