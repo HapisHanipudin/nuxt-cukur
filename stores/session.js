@@ -33,6 +33,7 @@ export const useSessionStore = defineStore({
           });
           this.setAuthToken(data.accessToken);
           this.setAuthUser(data.user);
+          navigateTo("/");
           resolve(true);
         } catch (err) {
           reject(err);

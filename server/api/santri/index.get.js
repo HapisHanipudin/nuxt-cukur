@@ -1,8 +1,14 @@
-import { getAllSantri } from "~/server/db/santri";
+import { getAllSantri, searchSantriByName } from "~/server/db/santri";
 import { transformSantri } from "~/server/transformers/santri";
 
 export default defineEventHandler(async (event) => {
-  const santri = await getAllSantri();
+  const { q } = getQuery(event);
 
-  return santri.map(transformSantri);
+  if (q) {
+    const santri = await searchSantriByName(q);
+    return santri.map(transformSantri);
+  } else {
+    const santri = await getAllSantri();
+    return santri.map(transformSantri);
+  }
 });

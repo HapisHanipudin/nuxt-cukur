@@ -2,6 +2,12 @@
   <AuthLoginPage />
 </template>
 
-<script lang="ts" setup></script>
+<script setup>
+const session = useSessionStore();
 
-<style></style>
+onBeforeMount(async () => {
+  if (!!session.authUser) {
+    navigateTo("/");
+  }
+});
+</script>
