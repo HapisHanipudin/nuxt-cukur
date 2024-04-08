@@ -7,7 +7,7 @@
         <div class="animate-spin rounded-full h-8 w-8 border-2 border-x-gold-700 border-y-gold-950"></div>
         Loading...
       </div>
-      <UIQueueInput v-else @inputEnter="queueInput" v-motion-slide-bottom :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
+      <UIQueueInput v-else @inputEnter="queueInput" v-motion-slide-bottom :delay="i * 100" :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
     </div>
     <h2 class="text-3xl font-extrabold text-white">On Progress</h2>
     <div class="flex max-lg:flex-col gap-3 justify-center">
