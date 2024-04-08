@@ -15,7 +15,7 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr v-if="isLoading" v-for="i in 10" class="border-b font-semibold">
+          <tr v-if="isLoading" v-for="i in 10" class="border-b font-semibold">
             <td class="p-3 text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="font-bold"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="text-center max-md:hidden"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
@@ -27,7 +27,7 @@
                 <UIButton class="flex gap-2 hover:scale-105" font="bold"><ClockIcon class="w-6 h-6" /> <span class="max-lg:hidden">Riwayat</span></UIButton>
               </div>
             </td>
-          </tr> -->
+          </tr>
           <tr
             v-motion="{
               initial: { opacity: 0, x: 100 + '%' },
