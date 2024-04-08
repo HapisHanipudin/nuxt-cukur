@@ -11,7 +11,7 @@
             <th class="w-16">No</th>
             <th>Nama/Tanggal</th>
             <th class="w-36 max-md:hidden">Waktu</th>
-            <th class="w-32">Aksi</th>
+            <th class="w-32" v-if="session.isAdmin">Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -19,7 +19,7 @@
             <td class="p-3 text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="font-bold"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="text-center max-md:hidden"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
-            <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
+            <td class="text-center" v-if="session.isAdmin"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <!-- <td class="flex gap-2 text-center">
               <div class="flex gap-2">
                 <UIButton class="flex gap-2 hover:scale-105" font="bold"><PencilSquareIcon class="w-6 h-6" /> <span class="max-lg:hidden">Ubah</span> </UIButton>
@@ -51,7 +51,7 @@
               <NuxtLink class="hover:underline" :to="`/cukur/${cukur.id}`" :data="cukur">{{ cukur.name }}</NuxtLink>
             </td>
             <td class="text-center max-md:hidden">{{ cukur.waktu }}</td>
-            <td class="text-center">
+            <td class="text-center" v-if="session.isAdmin">
               <div class="flex items-center gap-2">
                 <NuxtLink :to="`/cukur/${cukur.id}/tiket`">
                   <UIButton class="flex gap-2 items-center hover:scale-105" font="bold"><PencilSquareIcon class="w-6 h-6" /> <span class="max-lg:hidden">Beli</span> </UIButton>
@@ -76,7 +76,6 @@ import { useSessionStore } from "~/stores/session";
 import { useEmitter } from "~/composables/useEmitter";
 
 const session = useSessionStore();
-
 const modal = useModalStore();
 const isLoading = ref(true);
 const cukurs = ref([]);
