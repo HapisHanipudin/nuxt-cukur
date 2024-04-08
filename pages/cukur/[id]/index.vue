@@ -1,13 +1,15 @@
 <template>
   <div v-if="!isLoading" class="flex container flex-col gap-4 mx-8 my-5">
     <h1 class="text-gold-700 font-black font-sans text-4xl">Cukur</h1>
-    <h2 v-if="session.isAuthenticated" class="text-3xl font-extrabold text-white">Input Here</h2>
+    <h2 v-if="session.isAuthenticated" class="text-3xl font-extrabold text-white">
+      Input Here <span v-if="countDown" class="text-md">{{ countDown }}</span>
+    </h2>
     <div v-if="session.isAuthenticated" class="flex max-lg:flex-col gap-3 justify-center">
       <div v-if="inputLoading" class="w-full flex items-center justify-center gap-3 p-3 text-xl font-semibold">
         <div class="animate-spin rounded-full h-8 w-8 border-2 border-x-gold-700 border-y-gold-950"></div>
         Loading...
       </div>
-      <UIQueueInput v-else @inputEnter="queueInput" v-motion-slide-bottom :delay="i * 100" :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
+      <UIQueueInput v-model="input" v-else @inputEnter="queueInput" v-motion-slide-bottom :delay="i * 100" :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
     </div>
     <h2 class="text-3xl font-extrabold text-white">On Progress</h2>
     <div class="flex max-lg:flex-col gap-3 justify-center">
@@ -74,6 +76,9 @@ const inputLoading = ref(false);
 const $route = useRoute();
 const cukurData = ref({});
 const session = useSessionStore();
+const input = ref("");
+let countDown = ref(0);
+const interval = ref(null);
 
 const queueInput = async (event) => {
   if (event === "") return;
@@ -85,12 +90,42 @@ const queueInput = async (event) => {
       method: "POST",
     });
     toast.showToast(res.type, res.message);
+    if (res.action === "FINISHED") {
+      startCountDown();
+    } else if (res.action === "PROGRESSED") {
+      clearInterval(interval.value);
+      countDown.value = 0;
+    }
   } catch (error) {
     toast.showToast("error", error.message);
   } finally {
+    input.value = "";
     inputLoading.value = false;
     await getSantris();
   }
+};
+
+const startCountDown = async () => {
+  countDown.value = 10;
+  interval.value = setInterval(async () => {
+    countDown.value--;
+    if (countDown.value === 0) {
+      clearInterval(interval.value);
+      if (cukurData.value.queue[0]?.id !== input.value) {
+        try {
+          const res = await $fetch(`/api/cukur/${$route.params.id}/${cukurData.value.queue[0].id}/fail`, {
+            method: "POST",
+          });
+          toast.showToast(res.type, res.message);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          await getSantris();
+          startCountDown();
+        }
+      }
+    }
+  }, 1000);
 };
 
 const getSantris = async () => {

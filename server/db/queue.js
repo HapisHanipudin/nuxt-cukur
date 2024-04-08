@@ -45,14 +45,28 @@ export const updateQueue = (id, queueData) => {
   });
 };
 
-export const updateQueueWhereValueMoreThan = (id, num, queueData, limit) => {
+export const updateQueueWhereValueMoreThan = (id, num, queueData) => {
   return prisma.queue.updateMany({
     where: {
       cukurId: id,
       status: "WAITING",
       queueNumber: {
         gte: num,
-        lte: limit ? limit : Infinity,
+      },
+    },
+    data: {
+      ...queueData,
+    },
+  });
+};
+
+export const updateQueueBetween = (id, num1, num2, queueData) => {
+  return prisma.queue.updateMany({
+    where: {
+      status: "WAITING",
+      queueNumber: {
+        gt: num1,
+        lt: num2,
       },
     },
     data: {

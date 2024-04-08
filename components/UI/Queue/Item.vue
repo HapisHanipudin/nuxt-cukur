@@ -13,7 +13,7 @@
           'bg-teal-500 text-white': props.antrian.ticket === 'REGULER',
           'bg-gold-500': props.antrian.ticket === 'VIP',
         }"
-        class="px-3 py-1 rounded-xl font-bold text-black"
+        class="px-3 py-1 rounded-xl font-bold text-black transition-all duration-200 ease-in-out"
         >{{ props.antrian.queueNumber }}</span
       >
       <span
@@ -21,7 +21,7 @@
           'bg-teal-500 text-white': props.antrian.ticket === 'REGULER',
           'bg-gold-500': props.antrian.ticket === 'VIP',
         }"
-        class="px-3 py-1 rounded-xl font-bold text-black"
+        class="px-3 py-1 rounded-xl font-bold text-black transition-all duration-200 ease-in-out"
         >{{ props.antrian.ticket }}</span
       >
     </div>

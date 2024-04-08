@@ -76,6 +76,8 @@ const submitTiket = async () => {
     toast.showToast("success", "Berhasil Beli Tiket");
   } catch (error) {
     toast.showToast("error", error.statusMessage);
+  } finally {
+    data.value.santriId = "";
   }
 };
 

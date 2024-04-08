@@ -1,4 +1,4 @@
-import { getQueueById, getWaitingQueue, updateQueue, updateQueueWhereValueMoreThan } from "~/server/db/queue";
+import { getQueueById, getWaitingQueue, updateQueue, updateQueueBetween, updateQueueWhereValueMoreThan } from "~/server/db/queue";
 
 export default defineEventHandler(async (event) => {
   const cukurId = event.context.params.id;
@@ -8,47 +8,51 @@ export default defineEventHandler(async (event) => {
 
   const queue = await getQueueById(queueId);
 
-  if (queue.failed > 3) {
-    const update = await updateQueueWhereValueMoreThan(cukurId, queue.queueNumber, {
+  if (queue.failed > 1) {
+    const lastQueue = queues.pop();
+    const newQueueNum = lastQueue.queueNumber;
+    const updated = await updateQueueWhereValueMoreThan(cukurId, queue.queueNumber, {
       queueNumber: {
         decrement: 1,
       },
     });
     const failed = await updateQueue(queueId, {
-      queueNumber: queues[queues.length - 1].queueNumber,
+      failed: queue.failed + 1,
+      queueNumber: newQueueNum,
     });
     return {
       action: "FAILED",
       type: "warning",
       message: "Diturunkan ke antrian paling bawah",
       result: {
+        newQueueNum,
         failed,
-        update,
+        updated,
       },
     };
   } else {
-    const newQueueNum = queue.queueNumber + 2;
-    const failed = await updateQueue(queueId, {
-      failed: queue.failed + 1,
-      queueNumber: newQueueNum,
-    });
-    const updated = await updateQueueWhereValueMoreThan(
+    const update = await updateQueueBetween(
       cukurId,
       queue.queueNumber,
+      queue.queueNumber + 3,
       {
         queueNumber: {
           decrement: 1,
         },
       },
-      newQueueNum
+      queues[queues.length - 1].queueNumber
     );
+    const failed = await updateQueue(queueId, {
+      failed: queue.failed + 1,
+      queueNumber: queue.queueNumber + 2,
+    });
     return {
       action: "FAILED",
       type: "warning",
-      message: "Cukur gagal diproses",
+      message: "Cukur gagal diproses, turun 2 antrian",
       result: {
         failed,
-        updated,
+        update,
       },
     };
   }

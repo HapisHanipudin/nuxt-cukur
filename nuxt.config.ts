@@ -14,23 +14,5 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtAccessSecret: process.env.JWT_ACCESS_SECRET,
     jwtRefreshSecret: process.env.JWT_REFRESH_SECRET,
-    public: {
-      motion: {
-        directives: {
-          "pop-bottom": {
-            initial: {
-              scale: 0,
-              opacity: 0,
-              y: 100,
-            },
-            visible: {
-              scale: 1,
-              opacity: 1,
-              y: 0,
-            },
-          },
-        },
-      },
-    },
   },
 });
