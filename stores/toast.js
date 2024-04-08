@@ -4,16 +4,13 @@ export const useToastStore = defineStore({
     show: false,
     type: null,
     message: null,
+    list: [],
   }),
   actions: {
     showToast(type, message) {
-      this.show = true;
-      this.type = type;
-      this.message = message;
+      this.list.push({ type, message });
       setTimeout(() => {
-        this.show = false;
-        this.type = null;
-        this.message = null;
+        this.list.shift();
       }, 3000);
     },
   },

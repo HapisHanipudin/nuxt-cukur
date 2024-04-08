@@ -5,7 +5,7 @@
     <div>
       <Sidebar />
     </div>
-    <div class="w-full min-h-screen flex justify-center items-center text-white">
+    <div class="w-full min-h-screen flex justify-center overflow-y-hidden items-center max-lg:pb-20 text-white">
       <NuxtPage />
     </div>
   </div>

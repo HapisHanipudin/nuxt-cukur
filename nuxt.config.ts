@@ -1,11 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vueuse/motion/nuxt"],
-
+  modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt", "@vueuse/motion/nuxt", "nuxt-primevue"],
+  primevue: {},
   app: {
     head: {
-      title: "Quadrant Cuts",
+      title: "Dream Cuts",
       meta: [{ name: "Sistem Cukur Santri SI", content: "Sistem Cukur Santri SI" }],
     },
   },

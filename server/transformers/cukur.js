@@ -1,9 +1,11 @@
 import human from "human-time";
+import { transformQueue } from "./queue";
 
 export const transformCukur = (cukur) => {
   return {
     id: cukur.id,
     name: cukur.name,
+    tukangCukur: cukur.tukangCukur,
     waktu: human(cukur.tanggal),
   };
 };
@@ -11,6 +13,6 @@ export const transformCukur = (cukur) => {
 export const transformCukurWithQueue = (cukur) => {
   return {
     cukur: transformCukur(cukur),
-    queue: transformQueue(cukur.queue),
+    queue: cukur.queue.map(transformQueue),
   };
 };

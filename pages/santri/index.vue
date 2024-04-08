@@ -82,6 +82,7 @@ const session = useSessionStore();
 const modal = useModalStore();
 const isLoading = ref(true);
 const santris = ref([]);
+const toast = useToastStore();
 
 const $emitter = useEmitter();
 
@@ -115,6 +116,11 @@ const deleteSantri = async (id) => {
 };
 
 onBeforeMount(async () => {
+  const isAdmin = session.isAdmin;
+  if (!isAdmin) {
+    toast.showToast("error", "Anda bukan admin");
+    return navigateTo(`/`);
+  }
   await getSantris();
 });
 </script>

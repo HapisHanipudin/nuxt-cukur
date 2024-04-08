@@ -1,9 +1,5 @@
 import { prisma } from ".";
 
-export const getAllQueue = () => {
-  return prisma.queue.findMany();
-};
-
 export const getCukurWithQueueById = (id) => {
   return prisma.cukur.findUnique({
     where: {
@@ -15,6 +11,17 @@ export const getCukurWithQueueById = (id) => {
           santri: true,
         },
       },
+    },
+  });
+};
+
+export const getQueueById = (id) => {
+  return prisma.queue.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      santri: true,
     },
   });
 };
@@ -38,16 +45,20 @@ export const updateQueue = (id, queueData) => {
   });
 };
 
-export const updateQueueWhereValueMoreThan = (value, queueData) => {
+export const updateQueueWhereValueMoreThan = (id, queueData) => {
   return prisma.queue.updateMany({
     where: {
+      cukurId: id,
+      status: "WAITING",
       queueNumber: {
-        gt: value,
+        gte: queueData,
       },
     },
-    data: (queue) => ({
-      queueNumber: queue.queueNumber + 1,
-    }),
+    data: {
+      queueNumber: {
+        increment: 1,
+      },
+    },
   });
 };
 
@@ -64,7 +75,28 @@ export const getVVIPQueue = (id) => {
     where: {
       cukurId: id,
       ticketType: "VIP",
-      status: "WAITING",
+      status: "VIP_WAITING",
+    },
+    include: {
+      santri: true,
+    },
+    orderBy: {
+      queueNumber: "asc",
+    },
+  });
+};
+
+export const getVIP = (id) => {
+  return prisma.queue.findMany({
+    where: {
+      cukurId: id,
+      ticketType: "VIP",
+    },
+    include: {
+      santri: true,
+    },
+    orderBy: {
+      queueNumber: "asc",
     },
   });
 };
@@ -76,23 +108,62 @@ export const getRegQueue = (id) => {
       ticketType: "REGULER",
       status: "WAITING",
     },
+    include: {
+      santri: true,
+    },
+    orderBy: {
+      queueNumber: "asc",
+    },
   });
 };
 
-getOnProgressQueue = (id) => {
+export const getWaitingQueue = (id) => {
+  return prisma.queue.findMany({
+    where: {
+      cukurId: id,
+      status: "WAITING",
+    },
+    include: {
+      santri: true,
+    },
+    orderBy: {
+      queueNumber: "asc",
+    },
+  });
+};
+
+export const getOnProgressQueue = (id) => {
   return prisma.queue.findMany({
     where: {
       cukurId: id,
       status: "PROGRESS",
     },
+    include: {
+      santri: true,
+    },
   });
 };
 
-getFinishedQueue = (id) => {
+export const getFinishedQueue = (id) => {
   return prisma.queue.findMany({
     where: {
       cukurId: id,
       status: "FINISHED",
+    },
+    include: {
+      santri: true,
+    },
+  });
+};
+
+export const updateVipToWaitlist = (id, queueNum) => {
+  return prisma.queue.update({
+    where: {
+      id,
+    },
+    data: {
+      status: "WAITING",
+      queueNumber: queueNum,
     },
   });
 };
