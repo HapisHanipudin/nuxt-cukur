@@ -85,12 +85,11 @@ const queueInput = async (event) => {
     const res = await $fetch(`/api/cukur/${$route.params.id}/${event}`, {
       method: "POST",
     });
-    console.log(res);
+    toast.showToast(res.type, res.message);
   } catch (error) {
     toast.showToast("error", error.message);
   } finally {
     inputLoading.value = false;
-    toast.showToast(res.type, res.message);
     await getSantris();
   }
 };
