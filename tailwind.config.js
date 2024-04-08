@@ -8,6 +8,7 @@ export default {
       spin: "spin 1s linear infinite",
       toast: "toast 3s ease-in-out forwards",
       loadingbar: "loadingbar 2s 0.5s ease-in-out infinite ",
+      pulse: "pulse 2s infinite",
     },
     extend: {
       keyframes: {
