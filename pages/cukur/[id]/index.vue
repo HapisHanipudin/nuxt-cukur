@@ -11,8 +11,7 @@
     </div>
     <h2 class="text-3xl font-extrabold text-white">On Progress</h2>
     <div class="flex max-lg:flex-col gap-3 justify-center">
-      <UIQueueProgress v-motion-slide-bottom v-if="cukurData?.onProgress?.length > 0" v-for="progress in cukurData.onProgress" :data="progress" />
-      <UIQueueProgress v-motion-slide-bottom v-else :data="null" v-for="i in cukurData.tukangCukur" />
+      <UIQueueProgress v-motion-slide-bottom v-for="i in cukurData.tukangCukur" :data="cukurData?.onProgress[i - 1]" />
       <div v-if="session.isAdmin" class="flex gap-3 grow lg:flex-col lg:w-2/5">
         <NuxtLink :to="`/cukur/${cukurData.id}/tiket`" v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-green-500 grow text-white py-5"
           ><CreditCardIcon class="w-8 h-8 inline" /> Beli Tiket</NuxtLink
