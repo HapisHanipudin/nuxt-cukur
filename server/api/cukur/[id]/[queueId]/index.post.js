@@ -37,18 +37,27 @@ export default defineEventHandler(async (event) => {
         updated,
       },
     };
-  } else if (res.status == "WAITING" && res.id === queues[0].id && progress.length < cukur.tukangCukur) {
-    const updated = await updateQueue(queueId, {
-      status: "PROGRESS",
-    });
-    return {
-      action: "PROGRESSED",
-      type: "success",
-      message: "Cukur sedang diproses",
-      result: {
-        updated,
-      },
-    };
+  } else if (res.status == "WAITING" && res.id === queues[0].id) {
+    if (progress.length < cukur.tukangCukur) {
+      const updated = await updateQueue(queueId, {
+        status: "PROGRESS",
+      });
+      return {
+        action: "PROGRESSED",
+        type: "success",
+        message: "Cukur sedang diproses",
+        result: {
+          updated,
+        },
+      };
+    } else {
+      return {
+        action: "NOTHING",
+        type: "info",
+        message: "Kamu akan dicukur setelah ini",
+        result: {},
+      };
+    }
   } else if (res.status == "PROGRESS") {
     const updatedAt = new Date(res.updatedAt);
     const durasiCukur = (new Date() - updatedAt) / 1000;
