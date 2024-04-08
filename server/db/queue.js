@@ -114,6 +114,21 @@ export const getVIP = (id) => {
   });
 };
 
+export const getREG = (id) => {
+  return prisma.queue.findMany({
+    where: {
+      cukurId: id,
+      ticketType: "REGULER",
+    },
+    include: {
+      santri: true,
+    },
+    orderBy: {
+      queueNumber: "asc",
+    },
+  });
+};
+
 export const getRegQueue = (id) => {
   return prisma.queue.findMany({
     where: {

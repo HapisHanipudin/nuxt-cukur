@@ -13,6 +13,6 @@ export const transformCukur = (cukur) => {
 export const transformCukurWithQueue = (cukur) => {
   return {
     cukur: transformCukur(cukur),
-    queue: cukur.queue.map(transformQueue),
+    queue: cukur.queue,
   };
 };
