@@ -30,6 +30,8 @@ export default defineEventHandler(async (event) => {
 
     return {
       action: "VIP",
+      type: "success",
+      message: "Cukur VIP ditambah ke queue",
       result: {
         vip,
         updated,
@@ -41,6 +43,8 @@ export default defineEventHandler(async (event) => {
     });
     return {
       action: "PROGRESSED",
+      type: "success",
+      message: "Cukur sedang diproses",
       result: {
         updated,
       },
@@ -57,6 +61,8 @@ export default defineEventHandler(async (event) => {
     });
     return {
       action: "FINISHED",
+      type: "success",
+      message: `Cukur selesai, lama ${durasiCukurStr}`,
       result: {
         updated,
       },
@@ -64,7 +70,8 @@ export default defineEventHandler(async (event) => {
   }
   return {
     action: "NOTHING",
-    result: {},
+    type: "info",
     message: `Kamu harus menunggu ${queues[0].queueNumber - res.queueNumber} antrian`,
+    result: {},
   };
 });
