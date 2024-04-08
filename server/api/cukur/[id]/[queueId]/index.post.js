@@ -71,7 +71,7 @@ export default defineEventHandler(async (event) => {
   return {
     action: "NOTHING",
     type: "info",
-    message: `Kamu harus menunggu ${queues[0].queueNumber - res.queueNumber} antrian`,
+    message: `Kamu harus menunggu ${res.queueNumber - queues[0].queueNumber} antrian`,
     result: {},
   };
 });
