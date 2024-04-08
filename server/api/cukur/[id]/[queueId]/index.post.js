@@ -1,5 +1,6 @@
 import { getCukurById } from "~/server/db/cukur";
 import { getOnProgressQueue, getQueueById, getVVIPQueue, getWaitingQueue, updateQueue, updateQueueWhereValueMoreThan, updateVipToWaitlist } from "~/server/db/queue";
+import { transformQueue } from "~/server/transformers/queue";
 
 export default defineEventHandler(async (event) => {
   const cukurId = event.context.params.id;
@@ -19,20 +20,30 @@ export default defineEventHandler(async (event) => {
       queueNum = lastVipQueue.queueNumber + 1;
     }
 
-    const updated = await updateQueueWhereValueMoreThan(cukurId, queueNum);
+    const updated = await updateQueueWhereValueMoreThan(cukurId, queueNum, {
+      queueNumber: {
+        increment: 1,
+      },
+    });
 
     const vip = await updateVipToWaitlist(queueId, queueNum);
 
     return {
-      updated,
-      vip,
+      action: "VIP",
+      result: {
+        vip,
+        updated,
+      },
     };
   } else if (res.status == "WAITING" && res.id === queues[0].id && progress.length < cukur.tukangCukur) {
     const updated = await updateQueue(queueId, {
       status: "PROGRESS",
     });
     return {
-      updated,
+      action: "PROGRESSED",
+      result: {
+        updated,
+      },
     };
   } else if (res.status == "PROGRESS") {
     const updatedAt = new Date(res.updatedAt);
@@ -45,10 +56,15 @@ export default defineEventHandler(async (event) => {
       durasiCukur: durasiCukurStr,
     });
     return {
-      updated,
+      action: "FINISHED",
+      result: {
+        updated,
+      },
     };
   }
   return {
-    hllo: "world",
+    action: "NOTHING",
+    result: {},
+    message: `Kamu harus menunggu ${queues[0].queueNumber - res.queueNumber} antrian`,
   };
 });
