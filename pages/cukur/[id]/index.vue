@@ -61,8 +61,8 @@
       </UIQueueCard>
     </div>
   </div>
-  <div v-else class="flex container w-full h-screen justify-center items-center">
-    <div class="animate-spin rounded-full h-16 w-16 border-2 border-x-gold-700 border-y-gold-950"></div>
+  <div v-else class="flex container w-full h-screen justify-center items-center gap-2">
+    <div class="animate-spin rounded-full h-16 w-16 border-4 border-x-gold-700 border-y-gold-950"></div>
     <span class="text-3xl font-extrabold text-white"> Loading...</span>
   </div>
 </template>

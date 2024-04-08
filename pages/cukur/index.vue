@@ -19,14 +19,14 @@
             <td class="p-3 text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="font-bold"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="text-center max-md:hidden"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
-            <td class="text-center max-md:hidden"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
-            <td class="flex gap-2 text-center">
+            <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
+            <!-- <td class="flex gap-2 text-center">
               <div class="flex gap-2">
                 <UIButton class="flex gap-2 hover:scale-105" font="bold"><PencilSquareIcon class="w-6 h-6" /> <span class="max-lg:hidden">Ubah</span> </UIButton>
                 <UIButton class="flex gap-2 hover:scale-105" font="bold"><TrashIcon class="w-6 h-6" /> <span class="max-lg:hidden">Hapus</span></UIButton>
                 <UIButton class="flex gap-2 hover:scale-105" font="bold"><ClockIcon class="w-6 h-6" /> <span class="max-lg:hidden">Riwayat</span></UIButton>
               </div>
-            </td>
+            </td> -->
           </tr>
           <tr
             v-motion="{
