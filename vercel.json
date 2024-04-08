@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "edge"
+    },
+    "api/**/*.ts": {
+      "runtime": "edge"
+    }
+  }
+}
