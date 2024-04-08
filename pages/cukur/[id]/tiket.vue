@@ -1,5 +1,6 @@
 <template>
   <div class="max-w-3xl w-full text-gold-600 gap-4 flex mx-10 flex-col">
+    <NuxtLink :to="`/cukur/${$route.params.id}/`" class="flex gap-2 items-center font-semibold"><BackwardIcon class="w-6 h-6 inline" /> Kembali</NuxtLink>
     <h2 class="font-bold text-2xl">Pembelian Tiket</h2>
     <div class="flex flex-col w-full gap-3">
       <form @submit.prevent="submitTiket" class="flex flex-col w-full gap-3">
@@ -32,12 +33,19 @@
 
 <script setup>
 import { Combobox, ComboboxInput, ComboboxOptions, ComboboxOption } from "@headlessui/vue";
+import { BackwardIcon } from "@heroicons/vue/24/outline";
 
+const session = useSessionStore();
 const toast = useToastStore();
 const dataSantri = ref([]);
 const $route = useRoute();
 
 onBeforeMount(async () => {
+  const isAdmin = session.isAdmin;
+  if (!isAdmin) {
+    toast.showToast("error", "Anda bukan admin");
+    return navigateTo(`/cukur/${$route.params.id}/`);
+  }
   await getSantris();
 });
 
@@ -67,7 +75,7 @@ const submitTiket = async () => {
     });
     toast.showToast("success", "Berhasil Beli Tiket");
   } catch (error) {
-    toast.showToast("error", "Terjadi Kesalahan");
+    toast.showToast("error", error.statusMessage);
   }
 };
 

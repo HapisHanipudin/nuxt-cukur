@@ -4,11 +4,13 @@
       'bg-teal-500 border-white': props.data?.ticket === 'REGULER',
       'border-gold-800 bg-zinc-950': props.data?.ticket === 'VIP',
     }"
-    class="w-full lg:w-3/5 rounded-[2.5rem] relative py-16 border-4 flex items-center justify-center"
+    class="w-full rounded-[2.5rem] relative py-16 border-4 flex items-center justify-center"
   >
     <div class="absolute top-4 left-4 flex gap-2">
-      <span :class="{ 'text-teal-500 bg-white': props.data.ticket == 'REGULER', 'text-black bg-gold-700': props.data.ticket == 'VIP' }" v-if="!!props.data" class="px-7 py-2 text-2xl rounded-2xl font-bold">{{ props.data?.ticket }}</span>
-      <span :class="{ 'text-teal-500 bg-white': props.data.ticket == 'REGULER', 'text-black bg-gold-700': props.data.ticket == 'VIP' }" v-if="!!props.data" class="px-7 py-2 text-2xl rounded-2xl font-bold">{{
+      <span :class="{ 'text-teal-500 bg-white': props.data.ticket == 'REGULER', 'text-black bg-gold-700': props.data.ticket == 'VIP' }" v-if="!!props.data" class="xl:px-7 px-5 xl:py-2 py-1 text-2xl rounded-2xl font-bold">{{
+        props.data?.ticket
+      }}</span>
+      <span :class="{ 'text-teal-500 bg-white': props.data.ticket == 'REGULER', 'text-black bg-gold-700': props.data.ticket == 'VIP' }" v-if="!!props.data" class="xl:px-7 px-5 xl:py-2 py-1 text-2xl rounded-2xl font-bold">{{
         props.data?.queueNumber
       }}</span>
     </div>

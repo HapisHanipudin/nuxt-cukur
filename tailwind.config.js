@@ -5,11 +5,16 @@ export default {
   content: [],
   theme: {
     animation: {
+      spin: "spin 1s linear infinite",
       toast: "toast 3s ease-in-out forwards",
       loadingbar: "loadingbar 2s 0.5s ease-in-out infinite ",
     },
     extend: {
       keyframes: {
+        spin: {
+          from: { transform: "rotate(0deg)" },
+          to: { transform: "rotate(360deg)" },
+        },
         toast: {
           "0%, 100%": {
             opacity: 0,

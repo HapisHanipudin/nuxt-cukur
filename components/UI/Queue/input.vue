@@ -4,9 +4,9 @@
       <ComboboxInput
         placeholder="Cari Santri"
         class="flex items-center rounded-3xl gap-2 border-2 px-6 py-3 border-gold-950 text-gold-700 bg-inherit w-full focus:ring-gold-600 focus:border-gold-600 focus:border"
-        @change="input = $event.target.value"
-        @keyup.enter="$emits('inputEnter')"
-        @input="$emits('update:modelValue', $event.target.value)"
+        @input="input = $event.target.value"
+        @keyup.enter="$emits('inputEnter', $event.target.value)"
+        @change="$emits('update:modelValue', $event.target.value)"
       />
 
       <ComboboxOptions class="absolute z-10 w-full">
@@ -36,18 +36,15 @@ const $props = defineProps({
     default: () => [],
   },
   onProgress: {
-    type: Object,
-    default: () => {},
+    type: Array,
+    default: () => [],
   },
 });
 
 const input = ref($props.modelValue);
 
 const searchSantri = computed(() => {
-  const santris = [...$props.vip, ...$props.queue];
-  if ($props.onProgress) {
-    santris.push($props.onProgress);
-  }
+  const santris = [...$props.vip, ...$props.queue, ...$props.onProgress];
 
   return santris.filter((queue) => {
     const santri = queue.santri;

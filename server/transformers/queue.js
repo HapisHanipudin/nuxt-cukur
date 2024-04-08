@@ -1,10 +1,11 @@
 import human from "human-time";
 import { transformSantri } from "./santri";
+import { transformCukur } from "./cukur";
 
 export const transformQueue = (queue) => {
   return {
     id: queue.id,
-    santri: transformSantri(queue.santri),
+    santri: queue.santri ? transformSantri(queue.santri) : null,
     status: queue.status,
     queueNumber: queue.queueNumber,
     ticket: queue.ticketType,
@@ -15,9 +16,7 @@ export const transformQueue = (queue) => {
 
 export const transformQueueList = ({ cukur, queue, vip, onProgress, finished }) => {
   return {
-    id: cukur.id,
-    name: cukur.name,
-    Waktu: human(cukur.tanggal),
+    ...transformCukur(cukur),
     queue: queue.map(transformQueue),
     vip: vip.map(transformQueue),
     onProgress: onProgress.map(transformQueue),

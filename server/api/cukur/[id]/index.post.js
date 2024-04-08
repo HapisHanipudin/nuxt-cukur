@@ -15,9 +15,18 @@ export default defineEventHandler(async (event) => {
   };
 
   if (ticketType === "VIP") {
-    const queuenum = await getVIP(id);
+    const VIPQueue = await getVIP(id);
+    const queueNum = VIPQueue.length;
+
+    if (queueNum > 5) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "VIP queue is full",
+      });
+    }
+
     data.status = "VIP_WAITING";
-    data.queueNumber = queuenum.length + 1;
+    data.queueNumber = queueNum + 1;
   } else {
     const queuenum = await getWaitingQueue(id);
     data.queueNumber = queuenum.length + 1;

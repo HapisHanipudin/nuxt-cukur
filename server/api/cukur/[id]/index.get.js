@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     ...transformCukur(cukur),
-    onProgress: progress ? transformQueue(progress) : null,
+    onProgress: progress ? progress.map(transformQueue) : [],
     vip: vip.map(transformQueue),
     queue: queue.map(transformQueue),
   };

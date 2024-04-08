@@ -5,6 +5,7 @@ export const transformCukur = (cukur) => {
   return {
     id: cukur.id,
     name: cukur.name,
+    tukangCukur: cukur.tukangCukur,
     waktu: human(cukur.tanggal),
   };
 };

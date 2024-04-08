@@ -1,14 +1,19 @@
 <template>
   <div v-if="!isLoading" class="flex container flex-col gap-4 mx-8 my-5">
     <h1 class="text-gold-700 font-black font-sans text-4xl">Cukur</h1>
-    <h2 class="text-3xl font-extrabold text-white">Input Here</h2>
-    <div class="flex max-lg:flex-col gap-3 justify-center">
-      <UIQueueInput @inputEnter="queueInput" v-model="cukurInput" v-motion-slide-bottom :id="cukurData.id" :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
+    <h2 v-if="session.isAuthenticated" class="text-3xl font-extrabold text-white">Input Here</h2>
+    <div v-if="session.isAuthenticated" class="flex max-lg:flex-col gap-3 justify-center">
+      <div v-if="inputLoading" class="w-full flex items-center justify-center gap-3 p-3 text-xl font-semibold">
+        <div class="animate-spin rounded-full h-8 w-8 border-2 border-x-gold-700 border-y-gold-950"></div>
+        Loading...
+      </div>
+      <UIQueueInput v-else @inputEnter="queueInput" v-motion-slide-bottom :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
     </div>
     <h2 class="text-3xl font-extrabold text-white">On Progress</h2>
     <div class="flex max-lg:flex-col gap-3 justify-center">
-      <UIQueueProgress v-motion-slide-bottom :data="cukurData.onProgress" />
-      <div class="flex gap-3 grow lg:flex-col">
+      <UIQueueProgress v-motion-slide-bottom v-if="cukurData?.onProgress?.length > 0" v-for="progress in cukurData.onProgress" :data="progress" />
+      <UIQueueProgress v-motion-slide-bottom v-else :data="null" v-for="i in cukurData.tukangCukur" />
+      <div v-if="session.isAdmin" class="flex gap-3 grow lg:flex-col lg:w-2/5">
         <NuxtLink :to="`/cukur/${cukurData.id}/tiket`" v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-green-500 grow text-white py-5"
           ><CreditCardIcon class="w-8 h-8 inline" /> Beli Tiket</NuxtLink
         >
@@ -61,40 +66,44 @@
 <script setup>
 import { ClockIcon, CreditCardIcon } from "@heroicons/vue/24/outline";
 const isLoading = ref(true);
-
+const toast = useToastStore();
+const inputLoading = ref(false);
 const $route = useRoute();
-
 const cukurData = ref({});
+const session = useSessionStore();
 
-const cukurInput = ref("");
+const queueInput = async (event) => {
+  if (event === "") return;
 
-const queueInput = async () => {
-  if (cukurInput.value === "") return;
-
-  isLoading.value = true;
+  inputLoading.value = true;
 
   try {
-    const res = await $fetch(`/api/queue/${cukurInput.value}`, {});
-
-    cukurInput.value = "";
-    cukurData.value = res;
+    const res = await $fetch(`/api/cukur/${$route.params.id}/${event}`, {
+      method: "POST",
+    });
+    console.log(res);
+    toast.showToast("success", "Antrian telah di proses");
   } catch (error) {
-    console.log(error);
+    toast.showToast("error", error.message);
   } finally {
-    isLoading.value = false;
+    inputLoading.value = false;
+    await getSantris();
   }
 };
 
-onMounted(async () => {
-  isLoading.value = true;
+const getSantris = async () => {
   try {
     const res = await $fetch(`/api/cukur/${$route.params.id}`);
-    console.log(res);
     cukurData.value = res;
   } catch (error) {
     console.log(error);
   } finally {
-    isLoading.value = false;
   }
+};
+
+onBeforeMount(async () => {
+  isLoading.value = true;
+  await getSantris();
+  isLoading.value = false;
 });
 </script>

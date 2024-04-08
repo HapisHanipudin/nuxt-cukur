@@ -1,5 +1,6 @@
 <template>
-  <div class="flex items-center rounded-3xl gap-2 border-2 px-4 py-2 border-gold-950 text-gold-700">
+  <div class="flex items-center relative rounded-3xl gap-2 border-2 px-4 py-2 border-gold-950 text-gold-700">
+    <label class="absolute bg-inherit px-1 top-0 -translate-y-1/2" v-if="$props.label">{{ $props.label }}</label>
     <div class="w-6" v-if="$slots.icon">
       <slot name="icon"></slot>
     </div>
@@ -27,6 +28,10 @@ const $slots = useSlots();
 const emit = defineEmits(["update:modelValue"]);
 const $props = defineProps({
   modelValue: {
+    type: String,
+    default: "",
+  },
+  label: {
     type: String,
     default: "",
   },

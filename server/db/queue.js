@@ -45,16 +45,20 @@ export const updateQueue = (id, queueData) => {
   });
 };
 
-export const updateQueueWhereValueMoreThan = (value, queueData) => {
+export const updateQueueWhereValueMoreThan = (id, queueData) => {
   return prisma.queue.updateMany({
     where: {
+      cukurId: id,
+      status: "WAITING",
       queueNumber: {
-        gt: value,
+        gte: queueData,
       },
     },
-    data: (queue) => ({
-      queueNumber: queue.queueNumber + 1,
-    }),
+    data: {
+      queueNumber: {
+        increment: 1,
+      },
+    },
   });
 };
 
@@ -129,7 +133,7 @@ export const getWaitingQueue = (id) => {
 };
 
 export const getOnProgressQueue = (id) => {
-  return prisma.queue.findFirst({
+  return prisma.queue.findMany({
     where: {
       cukurId: id,
       status: "PROGRESS",
@@ -152,21 +156,8 @@ export const getFinishedQueue = (id) => {
   });
 };
 
-export const vipToWaitlist = (id, queueNum) => {
-  prisma.queue.updateMany({
-    where: {
-      queueNumber: {
-        gte: queueNum,
-      },
-    },
-    data: {
-      queueNumber: {
-        increment: 1,
-      },
-    },
-  });
-
-  return prisma.queue.updateMany({
+export const updateVipToWaitlist = (id, queueNum) => {
+  return prisma.queue.update({
     where: {
       id,
     },

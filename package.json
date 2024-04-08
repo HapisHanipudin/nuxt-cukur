@@ -7,7 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare && prisma generate"
   },
   "dependencies": {
     "@headlessui/vue": "^1.7.19",
@@ -23,6 +23,7 @@
     "mitt": "^3.0.1",
     "nuxt": "^3.11.1",
     "pinia": "^2.1.7",
+    "primevue": "^3.51.0",
     "tailwind-scrollbar": "^3.1.0",
     "unctx": "^2.3.1",
     "url-pattern": "^1.0.3",

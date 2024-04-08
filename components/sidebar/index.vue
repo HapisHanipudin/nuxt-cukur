@@ -6,8 +6,8 @@
     <div class="lg:mt-4 flex lg:flex-col gap-6 items-center justify-center text-white">
       <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" to="/"><HomeIcon class="w-8 h-8" /></NuxtLink>
       <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" to="/cukur"><QueueListIcon class="w-8 h-8" /></NuxtLink>
-      <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" to="/santri"><UsersIcon class="w-8 h-8" /></NuxtLink>
-      <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" to="/setting"><Cog6ToothIcon class="w-8 h-8" /></NuxtLink>
+      <NuxtLink v-if="session.isAdmin" class="hover:scale-110 duration-300 transition-all ease-in-out" to="/santri"><UsersIcon class="w-8 h-8" /></NuxtLink>
+      <NuxtLink v-if="session.isAdmin" class="hover:scale-110 duration-300 transition-all ease-in-out" to="/setting"><Cog6ToothIcon class="w-8 h-8" /></NuxtLink>
       <NuxtLink class="hover:scale-110 duration-300 transition-all ease-in-out" v-if="!session.authUser" to="/login"><ArrowLeftEndOnRectangleIcon class="w-8 h-8" /></NuxtLink>
       <button class="hover:scale-110 duration-300 transition-all ease-in-out" v-else @click="session.logout()"><ArrowLeftStartOnRectangleIcon class="w-8 h-8" /></button>
     </div>

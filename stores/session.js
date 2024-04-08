@@ -7,10 +7,18 @@ export const useSessionStore = defineStore({
     authToken: "",
     authUser: null,
     authLoading: true,
-    isAdmin: () => {
+  }),
+  getters: {
+    isAuthenticated() {
+      return !!this.authToken;
+    },
+    isAdmin() {
+      if (!this.authUser) {
+        return false;
+      }
       return this.authUser.type === "ADMIN";
     },
-  }),
+  },
   actions: {
     setAuthToken(token) {
       this.authToken = token;
