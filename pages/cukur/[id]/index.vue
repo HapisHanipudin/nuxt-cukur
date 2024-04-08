@@ -86,11 +86,11 @@ const queueInput = async (event) => {
       method: "POST",
     });
     console.log(res);
-    toast.showToast("success", "Antrian telah di proses");
   } catch (error) {
     toast.showToast("error", error.message);
   } finally {
     inputLoading.value = false;
+    toast.showToast(res.type, res.message);
     await getSantris();
   }
 };
