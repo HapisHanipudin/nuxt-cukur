@@ -9,9 +9,10 @@ export const transformQueue = (queue) => {
     status: queue.status,
     queueNumber: queue.queueNumber,
     ticket: queue.ticketType,
-    payment: queue.paymentStatus,
+    payment: queue.payment,
     waktu: human(queue.updatedAt),
     updatedAt: queue.updatedAt,
+    durasi: queue.durasiCukur ? queue.durasiCukur : null,
   };
 };
 
