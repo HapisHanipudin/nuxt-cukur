@@ -34,13 +34,19 @@
 
 <script setup>
 import { ClockIcon } from "@heroicons/vue/24/solid";
-import { computed, onMounted, onUnmounted, ref } from "vue";
 const props = defineProps({
   data: {
     type: Object,
     required: true,
   },
 });
+watch(
+  () => props.data,
+  () => {
+    durasiCukur.value = 0;
+    updatedAt.value = new Date(props.data?.updatedAt);
+  }
+);
 const updatedAt = ref(new Date(props.data?.updatedAt));
 const durasiCukur = ref(0);
 const interval = ref(null);
