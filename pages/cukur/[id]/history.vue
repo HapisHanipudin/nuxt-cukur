@@ -43,7 +43,7 @@
             v-for="(cukur, index) in cukurData.queues"
             :key="cukur.id"
           >
-            <td class="p-3 text-center">{{ index + 1 }}</td>
+            <td class="p-3 text-center">{{ cukur.queueNumber }}</td>
             <td class="font-semibold text-lg">
               {{ cukur.santri.name }}
             </td>
