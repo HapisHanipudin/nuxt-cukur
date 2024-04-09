@@ -135,7 +135,7 @@ const download = () => {
   queues.forEach((cukur) => {
     x = 10; // Reset x position for each row
     y += 5; // Increment y position for each row
-    const rowData = [rowNum.toLocaleString(), cukur.santri.name, cukur.ticket, cukur.status, cukur.durasi, cukur.payment];
+    const rowData = [cukur.queueNumber, cukur.santri.name, cukur.ticket, cukur.status, cukur.durasi, cukur.payment];
     rowData.forEach((text, index) => {
       doc.text(String(text), x, y);
       x += headers[index].width;

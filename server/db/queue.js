@@ -7,6 +7,9 @@ export const getCukurWithQueueById = (id) => {
     },
     include: {
       queue: {
+        orderBy: {
+          queueNumber: "asc",
+        },
         include: {
           santri: true,
         },
