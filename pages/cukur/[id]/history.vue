@@ -118,7 +118,7 @@ const download = () => {
 
   // Draw title
   doc.setFontSize(16);
-  doc.text("Kunjungan Santri di Cukur", x, y);
+  doc.text("Data" + cukurData.value.cukur.name, x, y);
   y += 10;
 
   // Draw table headers
