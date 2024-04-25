@@ -9,17 +9,17 @@
         <div class="animate-spin rounded-full h-8 w-8 border-2 border-x-gold-700 border-y-gold-950"></div>
         Loading...
       </div>
-      <UIQueueInput v-model="input" v-else @inputEnter="queueInput" v-motion-slide-bottom :delay="i * 100" :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
+      <UIQueueInput v-model="input" v-else @inputEnter="queueInput" v-motion-slide-bottom :vip="cukurData.vip" :on-progress="cukurData.onProgress" :queue="cukurData.queue" />
     </div>
     <h2 class="text-3xl font-extrabold text-white">On Progress</h2>
     <div class="flex max-lg:flex-col gap-3 justify-center">
-      <UIQueueProgress v-motion-slide-bottom v-for="i in cukurData.tukangCukur" :data="cukurData?.onProgress[i - 1]" />
+      <UIQueueProgress v-for="i in cukurData.tukangCukur" v-motion-slide-bottom :data="cukurData?.onProgress[i - 1]" />
       <div v-if="session.isAdmin" class="flex gap-3 grow lg:flex-col lg:w-2/5">
-        <NuxtLink :to="`/cukur/${cukurData.id}/tiket`" v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-green-500 grow text-white py-5"
-          ><CreditCardIcon class="w-8 h-8 inline" /> Beli Tiket</NuxtLink
+        <NuxtLink :to="`/cukur/${cukurData.id}/tiket`" v-motion-slide-right class="w-full flex justify-center items-center gap-2 rounded-3xl text-xl md:text-2xl font-bold bg-green-500 grow text-white py-5"
+          ><CreditCardIcon class="md:w-8 md:h-8 w-6 h-6 inline" /> Beli Tiket</NuxtLink
         >
-        <NuxtLink :to="`/cukur/${cukurData.id}/history`" v-motion-slide-right :delay="300" class="w-full flex justify-center items-center gap-2 rounded-3xl text-2xl font-bold bg-white text-black grow py-5"
-          ><ClockIcon class="w-8 h-8 inline" /> Riwayat</NuxtLink
+        <NuxtLink :to="`/cukur/${cukurData.id}/history`" v-motion-slide-right :delay="300" class="w-full flex justify-center items-center gap-2 rounded-3xl text-xl md:text-2xl font-bold bg-white text-black grow py-5"
+          ><ClockIcon class="md:w-8 md:h-8 w-6 h-6 inline" /> Riwayat</NuxtLink
         >
       </div>
     </div>

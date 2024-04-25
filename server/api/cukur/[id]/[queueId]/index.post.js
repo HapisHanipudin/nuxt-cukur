@@ -62,16 +62,24 @@ export default defineEventHandler(async (event) => {
     const updatedAt = new Date(res.updatedAt);
     const durasiCukur = (new Date() - updatedAt) / 1000;
 
-    const durasiCukurStr = durasiCukur < 60 ? `${Math.floor(durasiCukur)} Detik` : durasiCukur < 3600 ? `${Math.floor(durasiCukur / 60)} Menit` : `${Math.floor(durasiCukur / 3600)} Jam`;
+    const durasiCukurStr = () => {
+      const hours = Math.floor(durasiCukur / 3600);
+      const minutes = Math.floor((durasiCukur % 3600) / 60);
+      const seconds = Math.floor(durasiCukur % 60);
+
+      let durasi = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+      return durasi;
+    };
 
     const updated = await updateQueue(queueId, {
       status: "FINISHED",
-      durasiCukur: durasiCukurStr,
+      durasiCukur: durasiCukurStr(),
     });
     return {
       action: "FINISHED",
       type: "success",
-      message: `Cukur selesai, lama ${durasiCukurStr}`,
+      message: `Cukur selesai, dengan durasi ${durasiCukurStr()}`,
       result: {
         updated,
       },

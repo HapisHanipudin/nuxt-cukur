@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container m-10">
     <h1 class="text-gold-700 font-black font-sans text-3xl">Welcome To Dream Cuts</h1>
     <div class="mt-8">
       <span class="text-gray-400 text-xl">Ok, jadi apa itu Dream Cuts?</span>

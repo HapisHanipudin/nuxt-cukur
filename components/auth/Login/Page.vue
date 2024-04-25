@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-screen flex flex-col gap-3 justify-center items-center">
     <h1 class="text-gold-700 font-black font-sans text-3xl">Sign In</h1>
-    <form @submit.prevent="handleLogin" class="flex w-96 flex-col gap-3">
+    <form @submit.prevent="handleLogin" class="flex lg:w-96 flex-col gap-3 mx-10">
       <UIInput class="text-lg" type="text" placeholder="Username" v-model="data.username">
         <template #icon>
           <UserIcon />
