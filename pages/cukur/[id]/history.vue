@@ -158,7 +158,8 @@ const download = () => {
   queues.forEach((cukur) => {
     x = 10; // Reset x position for each row
     y += 5; // Increment y position for each row
-    const rowData = [cukur.queueNumber, cukur.santri.name, cukur.ticket, cukur.status, cukur.durasi, cukur.paymentStatus, cukur.payment];
+    const paymentStatus = cukur.ticket == "VIP" ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : "Lunas") : cukur.ticket == "REGULER" ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : "Lunas") : "Lunas";
+    const rowData = [cukur.queueNumber, cukur.santri.name, cukur.ticket, cukur.status, cukur.durasi, paymentStatus, cukur.payment];
     rowData.forEach((text, index) => {
       doc.text(String(text), x, y);
       x += headers[index].width;
