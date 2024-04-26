@@ -13,6 +13,7 @@
             <th class="w-32">Tiket</th>
             <th class="w-32">Status</th>
             <th class="w-32">Durasi</th>
+            <th class="w-32">Status Pembayaran</th>
 
             <th class="w-32">Pembayaran</th>
           </tr>
@@ -21,6 +22,7 @@
           <tr v-if="isLoading" v-for="i in 10" class="border-b font-semibold">
             <td class="p-3 text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="font-bold"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
+            <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
             <td class="text-center"><div class="h-8 bg-gray-400/45 rounded-full animate-pulse"></div></td>
@@ -50,6 +52,9 @@
             <td class="text-center">{{ cukur.ticket }}</td>
             <td class="text-center">{{ cukur.status }}</td>
             <td class="text-center">{{ cukur.durasi }}</td>
+            <td class="text-center">
+              {{ cukur.ticket == "VIP" ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : "Lunas") : cukur.ticket == "REGULER" ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : "Lunas") : "Lunas" }}
+            </td>
             <td class="text-center">{{ cukur.payment }}</td>
           </tr>
         </tbody>

@@ -25,6 +25,7 @@
         </div>
         <UIInputSelect class="w-full text-lg" placeholder="Pilih Tiket" v-model="data.ticketType" :options="['VIP', 'REGULER']" />
         <UIInputSelect class="w-full text-lg" placeholder="Pilih Pembayaran" v-model="data.payment" :options="['CASH', 'SALDO']" />
+        <UIInput v-if="data.payment == 'CASH'" type="number" class="w-full text-lg" placeholder="Masukkan Jumlah Pembayaran" v-model="data.paymentStatus" />
         <UIButton class="px-16py-2" font="bold">Submit</UIButton>
       </form>
     </div>
@@ -87,6 +88,7 @@ const data = ref({
   santriId: "",
   ticketType: "",
   payment: "",
+  paymentStatus: 0,
 });
 </script>
 
