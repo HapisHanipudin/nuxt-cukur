@@ -53,7 +53,12 @@
             <td class="text-center">{{ cukur.status }}</td>
             <td class="text-center">{{ cukur.durasi }}</td>
             <td class="text-center">
-              {{ cukur.ticket == "VIP" ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : "Lunas") : cukur.ticket == "REGULER" ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : "Lunas") : "Lunas" }}
+              <input
+                @keyup.enter="updatePaymentStatus(cukur.id, $event.target.value)"
+                class="bg-transparent"
+                type="text"
+                :value="cukur.ticket == 'VIP' ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : 'Lunas') : cukur.ticket == 'REGULER' ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : 'Lunas') : 'Lunas'"
+              />
             </td>
             <td class="text-center">{{ cukur.payment }}</td>
           </tr>
@@ -73,6 +78,18 @@ const cukurData = ref({
 });
 
 const profit = ref(0);
+
+const updatePaymentStatus = async (id, value) => {
+  const res = await $fetch(`/api/queue/${id}/`, {
+    method: "POST",
+    body: {
+      paymentStatus: parseInt(value),
+    },
+  });
+  if (res) {
+    await getCukur();
+  }
+};
 
 const viaSaldo = computed(() => {
   return cukurData.value.queues.filter((cukur) => {

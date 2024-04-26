@@ -5,7 +5,11 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody(event);
 
-  updateQueue(id, {
+  const res = await updateQueue(id, {
     ...body,
   });
+
+  if (res) {
+    return res;
+  }
 });
