@@ -194,7 +194,7 @@ const download = () => {
   queues.forEach((queue) => {
     udhBayar += queue.paymentStatus;
   }),
-    doc.text("Total Sudah Bayar" + udhBayar, x, y);
+    doc.text("Total Sudah Bayar : " + udhBayar, x, y);
 
   doc.save("cukur-history.pdf");
 };
