@@ -8,6 +8,7 @@ export const transformQueue = (queue) => {
     santri: queue.santri ? transformSantri(queue.santri) : null,
     status: queue.status,
     queueNumber: queue.queueNumber,
+    paymentStatus: queue.paymentStatus,
     ticket: queue.ticketType,
     payment: queue.payment,
     waktu: human(queue.updatedAt),
