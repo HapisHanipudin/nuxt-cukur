@@ -25,7 +25,11 @@ export default defineEventHandler(async (event) => {
     data.queueNumber = queueNum + 1;
   } else {
     const queuenum = await getWaitingQueue(id);
-    data.queueNumber = queuenum[queuenum.length - 1].queueNumber + 1;
+    if (queuenum) {
+      data.queueNumber = queuenum[queuenum.length - 1].queueNumber + 1;
+    } else {
+      data.queueNumber = 1;
+    }
   }
 
   const queue = await createQueue(data);
