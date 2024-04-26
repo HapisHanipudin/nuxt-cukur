@@ -5,16 +5,12 @@ export default defineEventHandler(async (event) => {
   const id = event.context.params.id;
   const body = await readBody(event);
 
-  const { santriId, ticketType, payment } = body;
-
   const data = {
-    santriId,
-    ticketType,
-    payment,
+    ...body,
     cukurId: id,
   };
 
-  if (ticketType === "VIP") {
+  if (body.ticketType === "VIP") {
     const VIPQueue = await getVIP(id);
     const queueNum = VIPQueue.length;
 
@@ -29,7 +25,7 @@ export default defineEventHandler(async (event) => {
     data.queueNumber = queueNum + 1;
   } else {
     const queuenum = await getWaitingQueue(id);
-    data.queueNumber = queuenum.length + 1;
+    data.queueNumber = queuenum[queuenum.length - 1].queueNumber + 1;
   }
 
   const queue = await createQueue(data);
