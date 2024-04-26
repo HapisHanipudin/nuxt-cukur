@@ -131,7 +131,7 @@ const download = () => {
     { label: "Tiket", width: 20 },
     { label: "Status", width: 25 },
     { label: "Durasi", width: 20 },
-    { label: "Status Pembayaran", width: 20 },
+    { label: "Keterangan", width: 20 },
     { label: "Pembayaran", width: 20 },
   ];
 
