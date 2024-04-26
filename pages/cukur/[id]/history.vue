@@ -131,6 +131,7 @@ const download = () => {
     { label: "Tiket", width: 20 },
     { label: "Status", width: 25 },
     { label: "Durasi", width: 20 },
+    { label: "Status Pembayaran", width: 20 },
     { label: "Pembayaran", width: 20 },
   ];
 
@@ -157,7 +158,7 @@ const download = () => {
   queues.forEach((cukur) => {
     x = 10; // Reset x position for each row
     y += 5; // Increment y position for each row
-    const rowData = [cukur.queueNumber, cukur.santri.name, cukur.ticket, cukur.status, cukur.durasi, cukur.payment];
+    const rowData = [cukur.queueNumber, cukur.santri.name, cukur.ticket, cukur.status, cukur.durasi, cukur.paymentStatus, cukur.payment];
     rowData.forEach((text, index) => {
       doc.text(String(text), x, y);
       x += headers[index].width;
@@ -187,6 +188,16 @@ const download = () => {
   doc.text("Total Bayar: " + queues.length * 15000, x, y);
   y += 5;
   doc.text("Total Ambil Saldo: " + saldo, x, y);
+  y += 5;
+  let udhBayar = 0;
+  doc.text(
+    "Total Sudah Bayar" +
+      queues.forEach((queue) => {
+        udhBayar += queue.paymentStatus;
+      }),
+    x,
+    y
+  );
 
   doc.save("cukur-history.pdf");
 };
