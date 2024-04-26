@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   primevue: {},
   app: {
     head: {
-      title: "Dream Cuts",
+      title: "DreamTrim",
       meta: [{ name: "Sistem Cukur Santri SI", content: "Sistem Cukur Santri SI" }],
     },
   },

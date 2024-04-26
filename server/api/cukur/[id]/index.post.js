@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     const VIPQueue = await getVIP(id);
     const queueNum = VIPQueue.length;
 
-    if (queueNum > 5) {
+    if (queueNum >= 5) {
       throw createError({
         statusCode: 400,
         statusMessage: "VIP queue is full",
@@ -25,8 +25,8 @@ export default defineEventHandler(async (event) => {
     data.queueNumber = queueNum + 1;
   } else {
     const queuenum = await getWaitingQueue(id);
-    if (queuenum) {
-      data.queueNumber = queuenum[queuenum.length - 1].queueNumber + 1;
+    if (queuenum && queuenum.length > 0) {
+      data.queueNumber = queuenum.pop().queueNumber + 1;
     } else {
       data.queueNumber = 1;
     }
