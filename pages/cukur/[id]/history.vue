@@ -38,7 +38,7 @@
                 x: 0,
               },
             }"
-            :class="{ 'bg-neutral-800/70': index % 2 === 0 }"
+            :class="{ 'bg-neutral-800/70': index % 2 === 0, 'text-gold-400': cukur.ticket == 'VIP' }"
             class="border-b font-semibold"
             v-for="(cukur, index) in cukurData.queues"
             :key="cukur.id"
