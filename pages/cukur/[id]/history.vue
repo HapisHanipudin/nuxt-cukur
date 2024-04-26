@@ -191,14 +191,10 @@ const download = () => {
   doc.text("Total Ambil Saldo: " + saldo, x, y);
   y += 5;
   let udhBayar = 0;
-  doc.text(
-    "Total Sudah Bayar" +
-      queues.forEach((queue) => {
-        udhBayar += queue.paymentStatus;
-      }),
-    x,
-    y
-  );
+  queues.forEach((queue) => {
+    udhBayar += queue.paymentStatus;
+  }),
+    doc.text("Total Sudah Bayar" + udhBayar, x, y);
 
   doc.save("cukur-history.pdf");
 };
