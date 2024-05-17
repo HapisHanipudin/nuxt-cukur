@@ -10,6 +10,7 @@
         @keyup="$emits('update:modelValue', $event.target.value)"
         @change="$emits('update:modelValue', $event.target.value)"
         @mounted="focusInput"
+        focus
       />
 
       <ComboboxOptions class="absolute z-10 w-full">
