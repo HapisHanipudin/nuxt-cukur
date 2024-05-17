@@ -119,9 +119,14 @@ onBeforeMount(async () => {
 });
 
 import jsPDF from "jspdf";
-const download = () => {
+const route = useRoute();
+const router = useRouter();
+const download = async () => {
   const queues = cukurData.value.queues;
-  if (!queues || queues.length === 0) return;
+  if (!queues || queues.length === 0) {
+    alert("Tidak ada data yang bisa di download");
+    return;
+  }
 
   const doc = new jsPDF({
     orientation: "portrait",
@@ -203,5 +208,11 @@ const download = () => {
   y += 5;
   doc.text("Total Uang Yg Dipegang (Kalo Semua Udh Bayar): " + (queues.length * 15000 - profit.value), x, y);
   doc.save("cukur-history.pdf");
+  await router.push({
+    name: "cukur-detail",
+    params: {
+      id: route.params.id,
+    },
+  });
 };
 </script>
