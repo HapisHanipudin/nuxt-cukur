@@ -2,6 +2,7 @@
   <div class="flex flex-col w-full container mx-10 my-16 gap-3 items-center">
     <div class="flex justify-between w-full items-center">
       <h1 class="text-gold-700 font-black font-sans text-3xl">History Cukur</h1>
+      <span>Total Bayar ke abang Cukur ; {{ totalBayar }}</span>
       <UIButton v-if="cukurData.queues.length > 0" @click="download()" class="flex gap-2 w-64 justify-center" font="bold"><DownloadIcon class="w-6 h-6" />Unduh Data</UIButton>
     </div>
     <div class="border overflow-hidden w-full rounded-3xl bg-neutral-800/20">
@@ -79,6 +80,14 @@ const isLoading = ref(true);
 const cukurData = ref({
   cukur: {},
   queues: [],
+});
+
+const totalBayar = computed(() => {
+  let num = 0;
+  cukurData.value.queues.forEach((cukur) => {
+    num += 15000;
+  });
+  return num;
 });
 
 const profit = ref(0);
