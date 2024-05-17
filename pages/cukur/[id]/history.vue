@@ -54,11 +54,15 @@
             <td class="text-center">{{ cukur.durasi }}</td>
             <td class="text-center">
               <input
+                v-if="session.isAdmin"
                 @keyup.enter="updatePaymentStatus(cukur.id, $event.target.value)"
                 class="bg-transparent"
                 type="text"
                 :value="cukur.ticket == 'VIP' ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : 'Lunas') : cukur.ticket == 'REGULER' ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : 'Lunas') : 'Lunas'"
               />
+              <span v-else>{{
+                cukur.ticket == "VIP" ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : "Lunas") : cukur.ticket == "REGULER" ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : "Lunas") : "Lunas"
+              }}</span>
             </td>
             <td class="text-center">{{ cukur.payment }}</td>
           </tr>
@@ -193,9 +197,11 @@ const download = () => {
   let udhBayar = 0;
   queues.forEach((queue) => {
     udhBayar += queue.paymentStatus;
-  }),
-    doc.text("Total Sudah Bayar : " + udhBayar, x, y);
+  });
 
+  doc.text("Total Sudah Bayar : " + udhBayar, x, y);
+  y += 5;
+  doc.text("Total Uang Yg Dipegang (Kalo Semua Udh Bayar): " + (queues.length * 15000 - profit.value), x, y);
   doc.save("cukur-history.pdf");
 };
 </script>
