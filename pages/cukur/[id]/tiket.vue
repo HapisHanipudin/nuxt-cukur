@@ -72,7 +72,12 @@ const submitTiket = async () => {
   try {
     await $fetch(`/api/cukur/${$route.params.id}`, {
       method: "POST",
-      body: data.value,
+      body: {
+        santriId: data.value.santriId,
+        ticketType: data.value.ticketType,
+        payment: data.value.payment,
+        paymentStatus: parseInt(data.value.paymentStatus, 10),
+      },
     });
     toast.showToast("success", "Berhasil Beli Tiket");
   } catch (error) {
