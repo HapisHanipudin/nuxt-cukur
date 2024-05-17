@@ -119,100 +119,93 @@ onBeforeMount(async () => {
 });
 
 import jsPDF from "jspdf";
-const route = useRoute();
-const router = useRouter();
-const download = async () => {
+const download = () => {
   const queues = cukurData.value.queues;
-  if (!queues || queues.length === 0) {
-    alert("Tidak ada data yang bisa di download");
-    return;
-  }
+  if (!queues || queues.length === 0) return;
 
-  const doc = new jsPDF({
-    orientation: "portrait",
-    unit: "mm",
-    format: "a4",
-  });
+  const numRow = queues.length + 1;
+  const numPage = Math.ceil(numRow / 54);
 
-  const headers = [
-    { label: "No", width: 10 },
-    { label: "Nama Santri", width: 60 },
-    { label: "Tiket", width: 20 },
-    { label: "Status", width: 25 },
-    // { label: "Durasi", width: 20 },
-    { label: "Keterangan", width: 20 },
-    { label: "Pembayaran", width: 20 },
-  ];
-
-  // Set initial position for drawing text
-  let x = 10;
-  let y = 10;
-
-  // Draw title
-  doc.setFontSize(16);
-  doc.text("Data " + cukurData.value.cukur.name, x, y);
-  y += 10;
-
-  // Draw table headers
-  doc.setFontSize(10);
-  headers.forEach((header) => {
-    doc.text(header.label, x, y);
-    doc.line(x, y + 2, x + header.width, y + 2);
-    x += header.width;
-  });
-  y += 5;
-
-  // Draw table rows
-  let rowNum = 1;
-  queues.forEach((cukur) => {
-    x = 10; // Reset x position for each row
-    y += 5; // Increment y position for each row
-    const paymentStatus = cukur.ticket == "VIP" ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : "Lunas") : cukur.ticket == "REGULER" ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : "Lunas") : "Lunas";
-    const rowData = [rowNum, cukur.santri.name, cukur.ticket, cukur.status, paymentStatus, cukur.payment];
-    rowData.forEach((text, index) => {
-      doc.text(String(text), x, y);
-      x += headers[index].width;
+  for (let i = 0; i < numPage; i++) {
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
     });
-    rowNum++;
-  });
-  x = 10;
-  y += 5;
-  // Draw table headers
-  doc.setFontSize(10);
-  headers.forEach((header) => {
-    doc.line(x, y + 2, x + header.width, y + 2);
-    x += header.width;
-  });
-  x = 10;
-  y += 10;
-  doc.text("Total Profit: " + profit.value, x, y);
-  y += 5;
-  let saldo = 0;
-  viaSaldo.value.forEach((cukur) => {
-    if (cukur.ticket === "VIP") {
-      saldo += 20000;
-    } else {
-      saldo += 15000;
-    }
-  });
-  doc.text("Total Bayar: " + queues.length * 15000, x, y);
-  y += 5;
-  doc.text("Total Ambil Saldo: " + saldo, x, y);
-  y += 5;
-  let udhBayar = 0;
-  queues.forEach((queue) => {
-    udhBayar += queue.paymentStatus;
-  });
 
-  doc.text("Total Sudah Bayar : " + udhBayar, x, y);
-  y += 5;
-  doc.text("Total Uang Yg Dipegang (Kalo Semua Udh Bayar): " + (queues.length * 15000 - profit.value), x, y);
-  doc.save("cukur-history.pdf");
-  await router.push({
-    name: "cukur-detail",
-    params: {
-      id: route.params.id,
-    },
-  });
+    const headers = [
+      { label: "No", width: 10 },
+      { label: "Nama Santri", width: 60 },
+      { label: "Tiket", width: 20 },
+      { label: "Status", width: 25 },
+      { label: "Keterangan", width: 20 },
+      { label: "Pembayaran", width: 20 },
+    ];
+
+    // Set initial position for drawing text
+    let x = 10;
+    let y = 10;
+
+    // Draw title
+    doc.setFontSize(16);
+    doc.text("Data " + cukurData.value.cukur.name, x, y);
+    y += 10;
+
+    // Draw table headers
+    doc.setFontSize(10);
+    headers.forEach((header) => {
+      doc.text(header.label, x, y);
+      doc.line(x, y + 2, x + header.width, y + 2);
+      x += header.width;
+    });
+    y += 5;
+
+    // Draw table rows
+    let rowNum = i * 54 + 1;
+    queues.slice(i * 54, (i + 1) * 54).forEach((cukur) => {
+      x = 10; // Reset x position for each row
+      y += 5; // Increment y position for each row
+      const paymentStatus = cukur.ticket == "VIP" ? (cukur.paymentStatus != 20000 ? cukur.paymentStatus - 20000 : "Lunas") : cukur.ticket == "REGULER" ? (cukur.paymentStatus != 16000 ? cukur.paymentStatus - 16000 : "Lunas") : "Lunas";
+      const rowData = [rowNum, cukur.santri.name, cukur.ticket, cukur.status, paymentStatus, cukur.payment];
+      rowData.forEach((text, index) => {
+        doc.text(String(text), x, y);
+        x += headers[index].width;
+      });
+      rowNum++;
+    });
+    x = 10;
+    y += 5;
+    // Draw table headers
+    doc.setFontSize(10);
+    headers.forEach((header) => {
+      doc.line(x, y + 2, x + header.width, y + 2);
+      x += header.width;
+    });
+    x = 10;
+    y += 10;
+    doc.text("Total Profit: " + profit.value, x, y);
+    y += 5;
+    let saldo = 0;
+    viaSaldo.value.forEach((cukur) => {
+      if (cukur.ticket === "VIP") {
+        saldo += 20000;
+      } else {
+        saldo += 15000;
+      }
+    });
+    doc.text("Total Bayar: " + queues.length * 15000, x, y);
+    y += 5;
+    doc.text("Total Ambil Saldo: " + saldo, x, y);
+    y += 5;
+    let udhBayar = 0;
+    queues.forEach((queue) => {
+      udhBayar += queue.paymentStatus;
+    });
+
+    doc.text("Total Sudah Bayar : " + udhBayar, x, y);
+    y += 5;
+    doc.text("Total Uang Yg Dipegang (Kalo Semua Udh Bayar): " + (queues.length * 15000 - profit.value), x, y);
+    doc.save(`cukur-history-${i + 1}.pdf`);
+  }
 };
 </script>
